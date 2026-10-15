@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#070914">
+<title>A GALAXY FOR U</title>
+
+<style>
+:root {
+  --accent: #c5b4ff;
+  --panel: rgba(7, 9, 25, .82);
+  --muted: #d1cfe3;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  color: #fff;
+  font-family: Georgia, "Times New Roman", serif;
+  background: #050611;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  background:
+    linear-gradient(rgba(3,4,16,.42), rgba(3,4,16,.78)),
+    url("https://images.unsplash.com/photo-1462331940025-496dfbfc7564?auto=format&fit=crop&w=2200&q=85")
+    center/cover no-repeat;
+}
+
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: radial-gradient(
+    ellipse at center,
+    transparent,
+    rgba(2,3,12,.5)
+  );
+}
+
+.shell {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px 14px;
+}
+
+.panel {
+  width: min(700px, 100%);
+  padding: clamp(23px, 6vw, 48px);
+  border: 1px solid rgba(255,255,255,.22);
+  border-radius: 23px;
+  background: var(--panel);
+  box-shadow: 0 20px 80px rgba(0,0,0,.35);
+  backdrop-filter: blur(10px);
+  text-align: center;
+  animation: appear .5s ease;
+}
+
+.eyebrow {
+  color: var(--accent);
+  font: 600 .76rem/1.5 Arial, sans-serif;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+}
+
+h1 {
+  font-size: clamp(2.5rem, 10vw, 4.5rem);
+  line-height: 1.05;
+  font-weight: 500;
+  letter-spacing: .04em;
+}
+
+h2 {
+  font-size: clamp(1.7rem, 6vw, 2.6rem);
+  line-height: 1.15;
+  font-weight: 500;
+}
+
+p {
+  color: var(--muted);
+  font-size: clamp(1.05rem, 3.5vw, 1.22rem);
+  line-height: 1.8;
+}
+
+.buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+button {
+  min-height: 49px;
+  padding: 14px 22px;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  background: #e9e4ff;
+  color: #100d20;
+  font: 600 .95rem Arial, sans-serif;
+  cursor: pointer;
+}
+
+button:hover {
+  background: white;
+}
+
+button.secondary {
+  background: rgba(255,255,255,.08);
+  color: white;
+  border-color: rgba(255,255,255,.3);
+}
+
+input {
+  display: block;
+  width: 100%;
+  max-width: 390px;
+  margin: 22px auto 10px;
+  padding: 16px;
+  border-radius: 13px;
+  border: 1px solid rgba(255,255,255,.35);
+  background: rgba(255,255,255,.09);
+  color: white;
+  font: 1rem Arial, sans-serif;
+  text-align: center;
+}
+
+input::placeholder {
+  color: rgba(255,255,255,.55);
+}
+
+input:focus {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.progress-wrap {
+  height: 4px;
+  margin: 0 auto 25px;
+  max-width: 300px;
+  border-radius: 9px;
+  background: rgba(255,255,255,.17);
+  overflow: hidden;
+}
+
+.progress {
+  height: 100%;
+  background: var(--accent);
+  transition: width .3s ease;
+}
+
+.mission-number {
+  color: var(--accent);
+  font: 600 .78rem Arial, sans-serif;
+  letter-spacing: .15em;
+  text-transform: uppercase;
+}
+
+.feedback {
+  min-height: 30px;
+  margin: 12px 0 0;
+  font: .92rem/1.6 Arial, sans-serif;
+}
+
+.tiny {
+  margin-top: 24px;
+  font: .8rem/1.6 Arial, sans-serif;
+  color: rgba(255,255,255,.65);
+}
+
+.letter {
+  text-align: left;
+  color: #f3f0ff;
+  line-height: 1.9;
+  font-size: 1.06rem;
+}
+
+.letter p {
+  color: inherit;
+  font-size: inherit;
+}
+
+.divider {
+  height: 1px;
+  width: 65px;
+  margin: 25px auto;
+  background: var(--accent);
+}
+
+@keyframes appear {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    transition-duration: .01ms !important;
+  }
+}
+</style>
+</head>
+
+<body>
+<main class="shell">
+  <section class="panel" id="app" aria-live="polite">
+    <p class="eyebrow">Un pequeño universo hecho para ti</p>
+    <h1>A GALAXY<br>FOR U</h1>
+    <p>Hay un tesoro escondido en algún lugar de este universo.</p>
+    <p>¿Deseas descubrirlo conmigo?</p>
+
+    <div class="buttons">
+      <button id="yesBtn">Sí</button>
+      <button class="secondary" id="noBtn">No (me odias;c)</button>
+    </div>
+
+    <p class="tiny">Para Marianhe, con amor.</p>
+  </section>
+</main>
+
+<audio id="music" loop preload="auto">
+  <source src="Adele%20-%20Lovesong%20%28Lyric%20Video%29.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+const app = document.getElementById("app");
+const music = document.getElementById("music");
+
+const missions = [
+  {
+    title: "La casualidad que lo inició todo",
+    text: "Todo comenzó gracias a una coincidencia y al primo de Laura, que terminó conectando dos caminos que todavía no sabían cuánto iban a significar el uno para el otro. ¿En qué juego comenzó nuestra historia?",
+    placeholder: "Escribe tu respuesta...",
+    answers: ["free fire"]
+  },
+  {
+    title: "Una conversación inesperada",
+    text: "Después de aquel primer encuentro en el juego, hubo otra plataforma que nos permitió seguir hablando y empezar a conocernos más allá de una partida. ¿Por dónde seguimos hablando?",
+    placeholder: "Escribe tu respuesta...",
+    answers: ["instagram", "por instagram", "instagram"]
+  },
+  {
+    title: "Detrás de la armadura",
+    text: "Al principio, Laura no siempre dejaba ver lo que sentía. A veces mantenía distancia porque abrir el corazón también significaba arriesgarse a salir herida. ¿Qué sentimiento hacía que tuviera miedo de enamorarse?",
+    placeholder: "Escribe tu respuesta...",
+    answers: ["miedo", "el miedo", "miedo a enamorarse", "temor"]
+  },
+  {
+    title: "Dos palabras antes del nosotros",
+    text: "Antes de que fuéramos oficialmente novias, hubo un momento especial en el que decir dos palabras significó muchísimo. ¿Cuáles fueron esas dos palabras?",
+    placeholder: "Escribe las dos palabras...",
+    answers: ["te amo", "teamo", "un te amo", "el te amo"]
+  },
+  {
+    title: "El camino hacia nosotras",
+    text: "Aunque la distancia estaba entre nosotras, existían las ganas de encontrarnos y convertir las conversaciones en un recuerdo real. ¿Qué quería hacer Marianhe para poder estar con Laura en persona?",
+    placeholder: "Escribe tu respuesta...",
+    answers: ["viajar", "venir a verme", "visitarme", "venir a visitarme", "viajar para verme", "ir a verme", "conocerme en persona", "vernos en persona"]
+  },
+  {
+    title: "La fecha que lo cambió todo",
+    text: "Entre tantos días del calendario, hay uno que guarda el comienzo oficial de nuestra historia como novias. Escribe el día, el mes y el año en que nos hicimos novias.",
+    placeholder: "DD/MM/AAAA",
+    answers: ["30042026", "30/04/2026", "30-04-2026"]
+  }
+];
+
+const letterParagraphs = [
+  "Llegaste al final de tu búsqueda… o bueno, yo llegué al final de la mía en cuanto mi corazón eligió amarte y mi alma te reconoció como su único amor en esta vida y en muchas otras más.",
+
+  "A veces me pregunto si algo hubiera cambiado aquella vez que nos conocimos y yo hubiese correspondido a tu amor desde el inicio. ¿Me hubieras amado más?",
+
+  "Al menos sé que no cometí el error de dejarte, como siempre pensé en hacerlo antes. Seguiría pensando que el amor no es para mí de haber tomado esa decisión; hubiera perdido al amor de mi vida sin conocerla.",
+
+  "A veces me hace sentir mal el hecho de que te hice difícil estar a mi lado… Supongo que soy afortunada porque, a pesar de eso, no te rendiste conmigo y me dejaste saber que tus intenciones conmigo eran sinceras. Y bueno, ¿cómo no iba a enamorarme de eso? De alguien que siempre demostró sentimientos lindos por mí, me dejó ser yo misma y me permitió, poco a poco, mostrarle algo mejor, algo que mereces: amor, y mucho amor.",
+
+  "Gracias por darme la oportunidad de estar en tu vida, por haber sido mi novia y por toda la historia de amor que comenzaste. Sé que esto es solo el inicio.",
+
+  "Solo anhelo el día en el que vuelva a llamarte «novia», en el que los meses vuelvan a ser nuestros. Aun así, mi corazón es tuyo; ya te eligió a ti. Así que, por más lejos que estés o aunque no estemos juntas, juro que mi amor por ti jamás acabará.",
+
+  "Te mereces todo lo lindo y, aunque quizás lo que haga no sea suficiente, prometo que mi amor es mucho más grande que todo lo poco que he podido demostrar."
+];
+
+function normalize(value) {
+  return value
+    .toLocaleLowerCase("es")
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[¿?¡!.,]/g, "")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function setBackground() {
+  // El fondo espacial permanece durante todas las misiones.
+  document.body.style.backgroundColor = "#050611";
+}
+
+document.getElementById("yesBtn").onclick = startJourney;
+
+document.getElementById("noBtn").onclick = () => {
+  app.innerHTML = `
+    <p class="eyebrow">Respuesta registrada</p>
+    <h2>¿Segura?</h2>
+    <p>El universo dice que deberías intentarlo otra vez…</p>
+    <div class="buttons">
+      <button id="tryAgain">Bueno, sí</button>
+      <button class="secondary" id="stayNo">Sigo diciendo que no</button>
+    </div>`;
+
+  document.getElementById("tryAgain").onclick = startJourney;
+
+  document.getElementById("stayNo").onclick = () => {
+    app.innerHTML = `
+      <p class="eyebrow">Última advertencia</p>
+      <h2>Me odias;c</h2>
+      <p>Yo sabía que no ibas a resistirte a descubrirlo.</p>
+      <div class="buttons">
+        <button id="backYes">Está bien, sí</button>
+      </div>`;
+
+    document.getElementById("backYes").onclick = startJourney;
+  };
+};
+
+function startJourney() {
+  music.volume = 0.65;
+  music.play().catch(() => {});
+  showMission(0);
+}
+
+function showMission(index) {
+  const mission = missions[index];
+  const progress = ((index + 1) / missions.length) * 100;
+
+  app.innerHTML = `
+    <div class="progress-wrap">
+      <div class="progress" style="width:${progress}%"></div>
+    </div>
+
+    <div class="mission-number">
+      Misión ${index + 1} de ${missions.length}
+    </div>
+
+    <h2>${mission.title}</h2>
+    <p>${mission.text}</p>
+
+    <form id="answerForm">
+      <input
+        id="answerInput"
+        type="text"
+        placeholder="${mission.placeholder}"
+        autocomplete="off"
+        autocapitalize="sentences"
+        aria-label="Respuesta de la misión"
+        required
+      >
+
+      <p class="feedback" id="feedback" role="status"></p>
+
+      <div class="buttons">
+        <button type="submit">
+          ${index === missions.length - 1
+            ? "Descubrir el tesoro"
+            : "Comprobar respuesta"}
+        </button>
+      </div>
+    </form>
+
+    <p class="tiny">
+      Cada respuesta te acerca un poquito más al tesoro.
+    </p>
+  `;
+
+  const form = document.getElementById("answerForm");
+  const input = document.getElementById("answerInput");
+  const feedback = document.getElementById("feedback");
+
+  form.onsubmit = (event) => {
+    event.preventDefault();
+
+    const answer = normalize(input.value);
+
+    const correct = mission.answers.some(
+      expected => normalize(expected) === answer
+    );
+
+    if (correct) {
+      if (index < missions.length - 1) {
+        feedback.textContent = "¡Correcto! ✨ Una parte más de nuestra historia.";
+        feedback.style.color = "#c9ffdf";
+
+        setTimeout(() => showMission(index + 1), 650);
+      } else {
+        showLetter();
+      }
+    } else {
+      feedback.textContent =
+        "Todavía no, mi amor. Inténtalo otra vez. 💗";
+      feedback.style.color = "#ffd1dc";
+      input.focus();
+    }
+  };
+}
+
+function showLetter() {
+  app.innerHTML = `
+    <p class="eyebrow">Lo encontraste</p>
+    <h2>Mi amor,</h2>
+    <div class="divider"></div>
+
+    <div class="letter" id="letterText"></div>
+
+    <p style="text-align:center; font-size:1.3rem;">
+      Te amo.
+    </p>
+
+    <div class="divider"></div>
+
+    <p class="tiny">
+      Pero no creas que mi amor se reduce a esto.
+      Hay algo más esperándote… Así que guarda un poquito
+      de curiosidad y espera hasta el día en que la Luna
+      esté en fase gibosa menguante.
+    </p>
+
+    <div class="buttons">
+      <button class="secondary" id="replayBtn">
+        Volver a recorrer el universo
+      </button>
+    </div>
+  `;
+
+  const letter = document.getElementById("letterText");
+
+  letterParagraphs.forEach(paragraph => {
+    const p = document.createElement("p");
+    p.textContent = paragraph;
+    letter.appendChild(p);
+  });
+
+  document.getElementById("replayBtn").onclick = () => {
+    music.currentTime = 0;
+    startJourney();
+  };
+}
+
+setBackground();
+</script>
+</body>
+</html>
